@@ -1,0 +1,31 @@
+﻿<Page x:Class="Tic_Tac_Toe.Views.Pages.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tic_Tac_Toe.Views.Pages"
+      xmlns:myViewModel="clr-namespace:Tic_Tac_Toe.ViewModel" 
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <myViewModel:MenuViewModel/>
+    </Page.DataContext>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Label Style="{StaticResource MenuLabelStyle}" Content="Tic Tac Toe"/>
+            <Button Content="1 PLayer" Style="{StaticResource MenuButtonStyle}"
+                    Command="{Binding NavigateToGamePageVsComputer}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
+            <Button Content="2 Player" Style="{StaticResource MenuButtonStyle}"
+                    Command="{Binding NavigateToGamePage}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
+            <Button Content="TestPage" Style="{StaticResource MenuButtonStyle}"
+                    Command="{Binding NavigateToTestPage}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}"/>
+            <Button Content="Exit" Style="{StaticResource MenuButtonStyle}"
+                    Command="{Binding QuitCommand}"/>
+            
+        </StackPanel>
+    </Grid>
+</Page>

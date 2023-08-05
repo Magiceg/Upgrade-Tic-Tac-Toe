@@ -1,0 +1,134 @@
+﻿<Page x:Class="Tic_Tac_Toe.Views.Pages.TestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Tic_Tac_Toe.Views.Pages" 
+      xmlns:test="clr-namespace:Tic_Tac_Toe.ViewModel"
+      xmlns:convert="clr-namespace:Tic_Tac_Toe.Converter"
+      Title="TestPage">
+
+    <Page.DataContext>
+        <test:TestViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <convert:GameOverBooleanConverter x:Key="GameOverBooleanConverter"/>
+        <convert:GameStateAndPlayerToMessageConverter x:Key="GameStateAndPlayerToMessageConverter"/>
+        <convert:GameOverConverterForTheLineVisible x:Key="GameOverConverterForTheLineVisible"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Style="{StaticResource StackPanelStyle}">
+            <Button Style="{StaticResource MenuIconButtonStyle}"
+                Command="{Binding NavigateToMenuPage}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Page}}}">
+                <Image Source="/ImageIcon/menu.png"/>
+            </Button>
+
+            <TextBlock Style="{StaticResource TextBlockStyle}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource GameStateAndPlayerToMessageConverter}">
+                        <Binding Path="CurrentGameState" />
+                        <Binding Path="CurrentPlayer" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <Button Style="{StaticResource RestartIconButtonStyle}"
+                    Command="{Binding RestartButtonCommand}">
+                <Image Source="/ImageIcon/refresh.png" />
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="0" Grid.Column="0"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[0][0]}"
+                    IsEnabled="{Binding IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="0" Grid.Column="1"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[0][1]}"
+                    IsEnabled="{Binding IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="0" Grid.Column="2"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[0][2]}"
+                    IsEnabled="{Binding IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="1" Grid.Column="0"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[1][0]}"
+                    IsEnabled="{Binding IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="1" Grid.Column="1"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[1][1]}"
+                    IsEnabled="{Binding IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="1" Grid.Column="2"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[1][2]}"
+                    IsEnabled="{Binding  IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="2" Grid.Column="0"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[2][0]}"
+                    IsEnabled="{Binding  IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="2" Grid.Column="1"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[2][1]}"
+                    IsEnabled="{Binding  IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            <Button Style="{StaticResource ButtonOnThePlayingField}" Grid.Row="2" Grid.Column="2"
+                    Command="{Binding CellClickButtonCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Content="{Binding Board[2][2]}"
+                    IsEnabled="{Binding  IsGameOver, Converter={StaticResource GameOverBooleanConverter}}"/>
+            
+            
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                    Visibility="{Binding Path=IsGameOver, Converter={StaticResource GameOverConverterForTheLineVisible}}">
+                <Rectangle Fill="Red" Height="4" VerticalAlignment="Center" />
+            </Border>
+
+            <!-- Для вертикальных выигрышных комбинаций -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                    Visibility="{Binding Path=IsGameOver, Converter={StaticResource GameOverConverterForTheLineVisible}}">
+                <Rectangle Fill="Red" Width="4" HorizontalAlignment="Center" />
+            </Border>
+
+            <!-- Для диагональных выигрышных комбинаций (слева направо) -->
+            <Border Grid.Row="0" Grid.Column="0"
+                    Visibility="{Binding Path=IsGameOver, Converter={StaticResource GameOverConverterForTheLineVisible}}">
+                <Rectangle Fill="Red" Width="4" Height="4" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </Border>
+
+            <!-- Для диагональных выигрышных комбинаций (справа налево) -->
+            <Border Grid.Row="0" Grid.Column="2"
+                    Visibility="{Binding Path=IsGameOver, Converter={StaticResource GameOverConverterForTheLineVisible}}">
+                <Rectangle Fill="Red" Width="4" Height="4" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            </Border>
+        </Grid>
+    </Grid>
+</Page>
