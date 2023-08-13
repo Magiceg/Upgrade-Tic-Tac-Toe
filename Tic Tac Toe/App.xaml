@@ -94,12 +94,7 @@
                     <Setter Property="Background" Value="{StaticResource ButtonOnPlayingFieldMouseOverBackgroundColor}"/>
                 </Trigger>
 
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsEnabled" Value="True"/>
-                        <Condition Property="DataContext" Value="{Binding DataContext.WinningLine, ElementName=TextPage.xaml}"/>
-                    </MultiTrigger.Conditions>
-                </MultiTrigger>
+               
             </Style.Triggers>
         </Style>
 
